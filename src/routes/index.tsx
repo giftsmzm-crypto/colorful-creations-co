@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowUpRight, Sparkles, Upload, Palette, Wallet, Globe, Star } from "lucide-react";
+import { ARTISTS, ARTWORKS, artGradient } from "@/lib/mock-data";
 
 export const Route = createFileRoute("/")({
   component: Home,
@@ -103,36 +104,37 @@ function Hero() {
 }
 
 function HeroCollage() {
-  const tiles = [
-    { c: "var(--sunset)", t: "Citrus Daydream", a: "by Mira K.", rot: "-rotate-3", h: "h-64" },
-    { c: "var(--violet)", t: "Neon Pacific", a: "by Owen R.", rot: "rotate-2 -mt-6", h: "h-52" },
-    { c: "var(--magenta)", t: "Bloom 04", a: "by Ines D.", rot: "rotate-1 -mt-10", h: "h-72" },
-    { c: "var(--tangerine)", t: "Soft Rebellion", a: "by Kai L.", rot: "-rotate-2 -mt-4", h: "h-56" },
+  const layout = [
+    { id: "citrus-daydream", rot: "-rotate-3", h: "h-64" },
+    { id: "neon-pacific", rot: "rotate-2 -mt-6", h: "h-52" },
+    { id: "bloom-04", rot: "rotate-1 -mt-10", h: "h-72" },
+    { id: "soft-rebellion", rot: "-rotate-2 -mt-4", h: "h-56" },
   ];
   return (
     <div className="relative grid grid-cols-2 gap-5">
-      {tiles.map((t, i) => (
-        <figure
-          key={i}
-          className={`group relative ${t.rot} overflow-hidden rounded-3xl border border-border bg-card shadow-2xl shadow-foreground/10 transition hover:rotate-0`}
-        >
-          <div
-            className={`${t.h} w-full`}
-            style={{
-              background: `radial-gradient(120% 100% at 20% 10%, color-mix(in oklab, ${t.c} 90%, white), ${t.c} 50%, color-mix(in oklab, ${t.c} 60%, black))`,
-            }}
-          />
-          <figcaption className="flex items-center justify-between gap-2 px-4 py-3">
-            <div>
-              <p className="font-display text-sm font-bold">{t.t}</p>
-              <p className="text-xs text-muted-foreground">{t.a}</p>
+      {layout.map((l) => {
+        const art = ARTWORKS.find((a) => a.id === l.id)!;
+        const artist = ARTISTS.find((a) => a.handle === art.artistHandle)!;
+        return (
+          <Link
+            key={l.id}
+            to="/art/$id"
+            params={{ id: art.id }}
+            className={`group relative ${l.rot} overflow-hidden rounded-3xl border border-border bg-card shadow-2xl shadow-foreground/10 transition hover:rotate-0`}
+          >
+            <div className={`${l.h} w-full`} style={{ background: artGradient(art.color) }} />
+            <div className="flex items-center justify-between gap-2 px-4 py-3">
+              <div>
+                <p className="font-display text-sm font-bold">{art.title}</p>
+                <p className="text-xs text-muted-foreground">by {artist.name.split(" ")[0]}</p>
+              </div>
+              <span className="rounded-full bg-foreground px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-background">
+                For sale
+              </span>
             </div>
-            <span className="rounded-full bg-foreground px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-background">
-              For sale
-            </span>
-          </figcaption>
-        </figure>
-      ))}
+          </Link>
+        );
+      })}
     </div>
   );
 }
@@ -185,14 +187,6 @@ function HowItWorks() {
 }
 
 function Showcase() {
-  const artists = [
-    { name: "Mira Kovač", tag: "Illustration", c: "var(--sunset)" },
-    { name: "Owen Reyes", tag: "Photography", c: "var(--violet)" },
-    { name: "Ines Duarte", tag: "Mixed media", c: "var(--magenta)" },
-    { name: "Kai Lindqvist", tag: "Posters", c: "var(--tangerine)" },
-    { name: "Sade Okafor", tag: "Textiles", c: "var(--magenta)" },
-    { name: "June Park", tag: "Ceramics", c: "var(--violet)" },
-  ];
   return (
     <section id="showcase" className="bg-foreground py-28 text-background">
       <div className="mx-auto max-w-7xl px-6">
@@ -209,12 +203,17 @@ function Showcase() {
         </div>
 
         <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {artists.map((a) => (
-            <article key={a.name} className="overflow-hidden rounded-3xl bg-background text-foreground">
+          {ARTISTS.map((a) => (
+            <Link
+              key={a.handle}
+              to="/artist/$handle"
+              params={{ handle: a.handle }}
+              className="group overflow-hidden rounded-3xl bg-background text-foreground transition hover:-translate-y-1"
+            >
               <div
-                className="aspect-[4/5] w-full"
+                className="aspect-[4/5] w-full transition group-hover:scale-[1.03]"
                 style={{
-                  background: `conic-gradient(from 120deg at 60% 40%, color-mix(in oklab, ${a.c} 80%, white), ${a.c}, color-mix(in oklab, ${a.c} 50%, black), color-mix(in oklab, ${a.c} 80%, white))`,
+                  background: `conic-gradient(from 120deg at 60% 40%, color-mix(in oklab, ${a.color} 80%, white), ${a.color}, color-mix(in oklab, ${a.color} 50%, black), color-mix(in oklab, ${a.color} 80%, white))`,
                 }}
               />
               <div className="flex items-center justify-between px-5 py-4">
@@ -226,7 +225,7 @@ function Showcase() {
                   <Star className="h-3.5 w-3.5 fill-current text-primary" /> 4.9
                 </div>
               </div>
-            </article>
+            </Link>
           ))}
         </div>
       </div>
