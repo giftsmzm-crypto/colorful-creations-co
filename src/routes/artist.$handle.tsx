@@ -1,10 +1,10 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
 import { ArrowLeft, MapPin, Check, Plus, Palette } from "lucide-react";
-import { getArtist, getArtistArtworks, artGradient, ARTISTS } from "@/lib/mock-data";
+import { getArtist, getArtistArtworks, artGradient, ARTISTS, type Artist, type Artwork } from "@/lib/mock-data";
 
 export const Route = createFileRoute("/artist/$handle")({
-  loader: ({ params }) => {
+  loader: ({ params }): { artist: Artist; works: Artwork[] } => {
     const artist = getArtist(params.handle);
     if (!artist) throw notFound();
     return { artist, works: getArtistArtworks(params.handle) };
