@@ -1,6 +1,7 @@
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800;9..144,900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap");
 
 @custom-variant dark (&:is(.dark *));
 
@@ -59,29 +60,46 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --font-display: "Fraunces", ui-serif, Georgia, serif;
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --color-sunset: var(--sunset);
+  --color-tangerine: var(--tangerine);
+  --color-magenta: var(--magenta);
+  --color-violet: var(--violet);
+  --color-cream: var(--cream);
+  --color-ink: var(--ink);
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.129 0.042 264.695);
+  --radius: 1.25rem;
+
+  /* Brand palette — Sunset Blaze */
+  --sunset: oklch(0.74 0.18 45);        /* #ff6b35 */
+  --tangerine: oklch(0.79 0.17 65);     /* #f7931e */
+  --magenta: oklch(0.62 0.23 0);        /* #e84393 */
+  --violet: oklch(0.55 0.22 290);       /* #6c5ce7 */
+  --cream: oklch(0.985 0.015 80);
+  --ink: oklch(0.18 0.04 285);
+
+  --background: oklch(0.985 0.015 80);
+  --foreground: oklch(0.18 0.04 285);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.129 0.042 264.695);
+  --card-foreground: oklch(0.18 0.04 285);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.129 0.042 264.695);
-  --primary: oklch(0.208 0.042 265.755);
-  --primary-foreground: oklch(0.984 0.003 247.858);
-  --secondary: oklch(0.968 0.007 247.896);
-  --secondary-foreground: oklch(0.208 0.042 265.755);
-  --muted: oklch(0.968 0.007 247.896);
-  --muted-foreground: oklch(0.554 0.046 257.417);
-  --accent: oklch(0.968 0.007 247.896);
-  --accent-foreground: oklch(0.208 0.042 265.755);
+  --popover-foreground: oklch(0.18 0.04 285);
+  --primary: oklch(0.62 0.23 0);
+  --primary-foreground: oklch(0.985 0.015 80);
+  --secondary: oklch(0.55 0.22 290);
+  --secondary-foreground: oklch(0.985 0.015 80);
+  --muted: oklch(0.95 0.03 60);
+  --muted-foreground: oklch(0.45 0.05 285);
+  --accent: oklch(0.74 0.18 45);
+  --accent-foreground: oklch(0.985 0.015 80);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(0.929 0.013 255.508);
-  --input: oklch(0.929 0.013 255.508);
-  --ring: oklch(0.704 0.04 256.788);
+  --border: oklch(0.9 0.04 60);
+  --input: oklch(0.92 0.03 60);
+  --ring: oklch(0.62 0.23 0);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -140,5 +158,37 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
   }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+}
+
+@layer utilities {
+  .text-gradient-sunset {
+    background: linear-gradient(100deg, var(--sunset), var(--magenta) 55%, var(--violet));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .bg-gradient-sunset {
+    background-image: linear-gradient(120deg, var(--sunset), var(--magenta) 55%, var(--violet));
+  }
+  .bg-gradient-warm {
+    background-image: linear-gradient(135deg, var(--tangerine), var(--sunset) 50%, var(--magenta));
+  }
+  .blob {
+    filter: blur(70px);
+    opacity: 0.55;
+    border-radius: 9999px;
+  }
+  @keyframes float-slow {
+    0%, 100% { transform: translate3d(0,0,0) scale(1); }
+    50% { transform: translate3d(20px,-20px,0) scale(1.08); }
+  }
+  .animate-float-slow { animation: float-slow 12s ease-in-out infinite; }
 }
