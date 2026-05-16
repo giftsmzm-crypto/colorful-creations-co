@@ -1,10 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowLeft, Eye, EyeOff, Lock, Mail, Palette, UserRound } from "lucide-react";
+import type { FormEvent } from "react";
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { isSupabaseConfigured, supabase } from "@/lib/supabase";
 
 export const Route = createFileRoute("/signup")({
   component: SignUp,
@@ -12,6 +14,58 @@ export const Route = createFileRoute("/signup")({
 
 function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
+  const [statusMessage, setStatusMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  async function handleSignUp(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setErrorMessage("");
+    setStatusMessage("");
+
+    if (!isSupabaseConfigured || !supabase) {
+      setErrorMessage("Supabase is not configured yet. Add your Supabase URL and anon key.");
+      return;
+    }
+
+    const formData = new FormData(event.currentTarget);
+    const email = String(formData.get("email") ?? "").trim();
+    const username = String(formData.get("username") ?? "").trim();
+    const password = String(formData.get("password") ?? "");
+
+    if (!email || !username || !password) {
+      setErrorMessage("Please fill in every field.");
+      return;
+    }
+
+    try {
+      setIsSubmitting(true);
+
+      const { error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            username,
+          },
+          emailRedirectTo:
+            typeof window === "undefined" ? undefined : `${window.location.origin}/signup`,
+        },
+      });
+
+      if (error) {
+        setErrorMessage(error.message);
+        return;
+      }
+
+      event.currentTarget.reset();
+      setStatusMessage("Account created. Check your email to confirm your signup.");
+    } catch {
+      setErrorMessage("Something went wrong while creating your account. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-background text-foreground">
@@ -68,9 +122,7 @@ function SignUp() {
 
           <form
             className="mt-8 space-y-5"
-            onSubmit={(event) => {
-              event.preventDefault();
-            }}
+            onSubmit={handleSignUp}
           >
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
@@ -132,10 +184,23 @@ function SignUp() {
 
             <Button
               type="submit"
+              disabled={isSubmitting}
               className="h-12 w-full rounded-2xl bg-gradient-sunset text-base font-bold text-primary-foreground shadow-xl shadow-primary/25 hover:opacity-95"
             >
-              Sign up
+              {isSubmitting ? "Creating account..." : "Sign up"}
             </Button>
+
+            {errorMessage ? (
+              <p className="rounded-2xl border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm font-medium text-destructive">
+                {errorMessage}
+              </p>
+            ) : null}
+
+            {statusMessage ? (
+              <p className="rounded-2xl border border-primary/20 bg-primary/10 px-4 py-3 text-sm font-medium text-foreground">
+                {statusMessage}
+              </p>
+            ) : null}
           </form>
 
           <p className="mt-6 text-center text-sm text-muted-foreground">
