@@ -76,10 +76,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "description", content: "A colorful marketplace for independent artists to upload, showcase, and sell digital and physical art. Low fees, big audience." },
       { name: "author", content: "Palette" },
       { property: "og:title", content: "Palette — Where artists sell their work" },
-      { property: "og:description", content: "Upload, showcase, and sell your art. Low fees. Big audience." },
+      { property: "og:description", content: "A colorful marketplace for independent artists to upload, showcase, and sell digital and physical art. Low fees, big audience." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "Palette — Where artists sell their work" },
+      { name: "twitter:description", content: "A colorful marketplace for independent artists to upload, showcase, and sell digital and physical art. Low fees, big audience." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/91acf650-1db4-49c2-86ef-6db1a4d495aa/id-preview-c1838392--81369403-e333-4a2a-87b9-41e6348ec8b6.lovable.app-1778930429105.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/91acf650-1db4-49c2-86ef-6db1a4d495aa/id-preview-c1838392--81369403-e333-4a2a-87b9-41e6348ec8b6.lovable.app-1778930429105.png" },
     ],
     links: [
       {
