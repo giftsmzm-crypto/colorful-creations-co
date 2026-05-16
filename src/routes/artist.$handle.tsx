@@ -82,7 +82,7 @@ function ArtistProfile() {
           </div>
 
           <div className="flex items-center gap-3">
-            {artist.links.map((l) => (
+            {artist.links.map((l: Artist["links"][number]) => (
               <a
                 key={l.label}
                 href={l.href}
@@ -123,7 +123,7 @@ function ArtistProfile() {
         </div>
 
         <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {works.map((w) => (
+          {works.map((w: Artwork) => (
             <Link
               key={w.id}
               to="/art/$id"
