@@ -48,10 +48,16 @@ function ForCustomers() {
         </p>
         <div className="mt-8 flex flex-wrap gap-4">
           <Link
-            to="/signup"
+            to="/top-trending"
             className="inline-flex items-center gap-2 rounded-full bg-gradient-sunset px-6 py-3.5 text-base font-semibold text-primary-foreground shadow-xl shadow-primary/30 transition hover:scale-[1.02]"
           >
-            Sign up free <ArrowUpRight className="h-4 w-4" />
+            Top trending <ArrowUpRight className="h-4 w-4" />
+          </Link>
+          <Link
+            to="/search"
+            className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-6 py-3.5 text-base font-semibold text-foreground transition hover:bg-accent"
+          >
+            <Search className="h-4 w-4" /> Search art
           </Link>
           <Link to="/for-artists" className="inline-flex items-center gap-1 text-base font-semibold underline decoration-2 underline-offset-4 hover:text-primary">
             Are you an artist? →
