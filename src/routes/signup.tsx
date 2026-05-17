@@ -1,5 +1,16 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowLeft, Eye, EyeOff, Lock, Mail, Palette, UserRound } from "lucide-react";
+import {
+  ArrowLeft,
+  Brush,
+  Eye,
+  EyeOff,
+  Lock,
+  Mail,
+  Palette,
+  ShoppingBag,
+  Sparkles,
+  UserRound,
+} from "lucide-react";
 import type { FormEvent } from "react";
 import { useState } from "react";
 
@@ -13,6 +24,8 @@ export const Route = createFileRoute("/signup")({
 });
 
 function SignUp() {
+  type Role = "artist" | "customer" | "both";
+  const [role, setRole] = useState<Role | null>(null);
   const [showPassword, setShowPassword] = useState(false);
   const [statusMessage, setStatusMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -47,6 +60,7 @@ function SignUp() {
         options: {
           data: {
             username,
+            role,
           },
           emailRedirectTo:
             typeof window === "undefined" ? undefined : `${window.location.origin}/signup`,
@@ -106,21 +120,84 @@ function SignUp() {
       <section className="relative z-10 mx-auto grid min-h-[calc(100vh-92px)] max-w-6xl items-center gap-10 px-6 pb-16 lg:grid-cols-[1fr_440px]">
         <div className="max-w-2xl">
           <p className="text-sm font-bold uppercase tracking-widest text-primary">
-            Artist signup
+            {role ? `${role === "both" ? "Artist + Collector" : role === "artist" ? "Artist" : "Collector"} signup` : "Join Palette"}
           </p>
           <h1 className="mt-4 text-5xl font-extrabold leading-[1.02] md:text-7xl">
-            Start your <span className="text-gradient-sunset">colorful</span> artist shop.
+            Start your <span className="text-gradient-sunset">colorful</span> journey.
           </h1>
           <p className="mt-6 max-w-xl text-lg text-muted-foreground md:text-xl">
-            Create your Palette account and get your gallery ready for collectors.
+            First, tell us how you want to use Palette. You can always change it later.
           </p>
         </div>
 
         <div className="rounded-[2rem] border border-border bg-card/90 p-6 shadow-2xl shadow-foreground/10 backdrop-blur md:p-8">
+        {!role ? (
           <div>
+            <h2 className="text-3xl font-extrabold">Choose your role</h2>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Pick one to continue. You can switch later from your profile.
+            </p>
+            <div className="mt-6 space-y-3">
+              {([
+                {
+                  id: "artist" as const,
+                  title: "I'm an artist",
+                  desc: "Upload artwork and sell to collectors.",
+                  Icon: Brush,
+                },
+                {
+                  id: "customer" as const,
+                  title: "I'm a customer",
+                  desc: "Browse, follow artists, and buy art.",
+                  Icon: ShoppingBag,
+                },
+                {
+                  id: "both" as const,
+                  title: "Both",
+                  desc: "Sell your work and collect from others.",
+                  Icon: Sparkles,
+                },
+              ]).map(({ id, title, desc, Icon }) => (
+                <button
+                  key={id}
+                  type="button"
+                  onClick={() => setRole(id)}
+                  className="group flex w-full items-center gap-4 rounded-2xl border border-border bg-background p-4 text-left transition hover:border-primary hover:shadow-lg hover:shadow-primary/10 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                >
+                  <span className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-gradient-sunset text-primary-foreground shadow-md shadow-primary/20">
+                    <Icon className="h-5 w-5" />
+                  </span>
+                  <span className="flex-1">
+                    <span className="block font-bold">{title}</span>
+                    <span className="block text-sm text-muted-foreground">{desc}</span>
+                  </span>
+                </button>
+              ))}
+            </div>
+            <p className="mt-6 text-center text-sm text-muted-foreground">
+              Already have an account?{" "}
+              <Link to="/" className="font-semibold text-primary hover:underline">
+                Sign in
+              </Link>
+            </p>
+          </div>
+        ) : (
+        <>
+          <div>
+            <button
+              type="button"
+              onClick={() => setRole(null)}
+              className="mb-3 inline-flex items-center gap-1 text-xs font-semibold text-muted-foreground hover:text-foreground"
+            >
+              <ArrowLeft className="h-3 w-3" /> Change role
+            </button>
             <h2 className="text-3xl font-extrabold">Create account</h2>
             <p className="mt-2 text-sm text-muted-foreground">
-              Use your email, a public username, and a secure password.
+              Signing up as{" "}
+              <span className="font-semibold text-foreground">
+                {role === "both" ? "an artist + collector" : role === "artist" ? "an artist" : "a collector"}
+              </span>
+              .
             </p>
           </div>
 
@@ -213,6 +290,8 @@ function SignUp() {
               Sign in
             </Link>
           </p>
+        </>
+        )}
         </div>
       </section>
     </main>
