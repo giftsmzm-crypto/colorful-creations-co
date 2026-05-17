@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SignupRouteImport } from './routes/signup'
+import { Route as ForCustomersRouteImport } from './routes/for-customers'
 import { Route as ForArtistsRouteImport } from './routes/for-artists'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ArtistHandleRouteImport } from './routes/artist.$handle'
@@ -18,6 +19,11 @@ import { Route as ArtIdRouteImport } from './routes/art.$id'
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
   path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForCustomersRoute = ForCustomersRouteImport.update({
+  id: '/for-customers',
+  path: '/for-customers',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ForArtistsRoute = ForArtistsRouteImport.update({
@@ -44,6 +50,7 @@ const ArtIdRoute = ArtIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/for-artists': typeof ForArtistsRoute
+  '/for-customers': typeof ForCustomersRoute
   '/signup': typeof SignupRoute
   '/art/$id': typeof ArtIdRoute
   '/artist/$handle': typeof ArtistHandleRoute
@@ -51,6 +58,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/for-artists': typeof ForArtistsRoute
+  '/for-customers': typeof ForCustomersRoute
   '/signup': typeof SignupRoute
   '/art/$id': typeof ArtIdRoute
   '/artist/$handle': typeof ArtistHandleRoute
@@ -59,19 +67,33 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/for-artists': typeof ForArtistsRoute
+  '/for-customers': typeof ForCustomersRoute
   '/signup': typeof SignupRoute
   '/art/$id': typeof ArtIdRoute
   '/artist/$handle': typeof ArtistHandleRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/for-artists' | '/signup' | '/art/$id' | '/artist/$handle'
+  fullPaths:
+    | '/'
+    | '/for-artists'
+    | '/for-customers'
+    | '/signup'
+    | '/art/$id'
+    | '/artist/$handle'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/for-artists' | '/signup' | '/art/$id' | '/artist/$handle'
+  to:
+    | '/'
+    | '/for-artists'
+    | '/for-customers'
+    | '/signup'
+    | '/art/$id'
+    | '/artist/$handle'
   id:
     | '__root__'
     | '/'
     | '/for-artists'
+    | '/for-customers'
     | '/signup'
     | '/art/$id'
     | '/artist/$handle'
@@ -80,6 +102,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ForArtistsRoute: typeof ForArtistsRoute
+  ForCustomersRoute: typeof ForCustomersRoute
   SignupRoute: typeof SignupRoute
   ArtIdRoute: typeof ArtIdRoute
   ArtistHandleRoute: typeof ArtistHandleRoute
@@ -92,6 +115,13 @@ declare module '@tanstack/react-router' {
       path: '/signup'
       fullPath: '/signup'
       preLoaderRoute: typeof SignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/for-customers': {
+      id: '/for-customers'
+      path: '/for-customers'
+      fullPath: '/for-customers'
+      preLoaderRoute: typeof ForCustomersRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/for-artists': {
@@ -128,6 +158,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ForArtistsRoute: ForArtistsRoute,
+  ForCustomersRoute: ForCustomersRoute,
   SignupRoute: SignupRoute,
   ArtIdRoute: ArtIdRoute,
   ArtistHandleRoute: ArtistHandleRoute,
