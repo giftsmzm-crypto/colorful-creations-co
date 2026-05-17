@@ -2,6 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { ArrowUpRight, Sparkles, Upload, Palette, Wallet, Globe, Star, ImageOff, Search } from "lucide-react";
 import { useState, type FormEvent } from "react";
 import { ARTISTS, ARTWORKS, artGradient } from "@/lib/mock-data";
+import { SettingsMenu } from "@/components/SettingsMenu";
 
 export const Route = createFileRoute("/")({
   component: Home,
@@ -60,6 +61,7 @@ function Nav() {
         <span className="font-display text-lg font-extrabold italic tracking-tight text-gradient-sunset sm:text-xl">
           Welcome
         </span>
+        <SettingsMenu />
       </div>
     </header>
   );
