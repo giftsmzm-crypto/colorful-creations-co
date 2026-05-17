@@ -9,22 +9,22 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as SigninRouteImport } from './routes/signin'
 import { Route as SignupRouteImport } from './routes/signup'
+import { Route as SigninRouteImport } from './routes/signin'
 import { Route as ForCustomersRouteImport } from './routes/for-customers'
 import { Route as ForArtistsRouteImport } from './routes/for-artists'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ArtistHandleRouteImport } from './routes/artist.$handle'
 import { Route as ArtIdRouteImport } from './routes/art.$id'
 
-const SigninRoute = SigninRouteImport.update({
-  id: '/signin',
-  path: '/signin',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
   path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SigninRoute = SigninRouteImport.update({
+  id: '/signin',
+  path: '/signin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ForCustomersRoute = ForCustomersRouteImport.update({
@@ -55,18 +55,18 @@ const ArtIdRoute = ArtIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/signin': typeof SigninRoute
   '/for-artists': typeof ForArtistsRoute
   '/for-customers': typeof ForCustomersRoute
+  '/signin': typeof SigninRoute
   '/signup': typeof SignupRoute
   '/art/$id': typeof ArtIdRoute
   '/artist/$handle': typeof ArtistHandleRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/signin': typeof SigninRoute
   '/for-artists': typeof ForArtistsRoute
   '/for-customers': typeof ForCustomersRoute
+  '/signin': typeof SigninRoute
   '/signup': typeof SignupRoute
   '/art/$id': typeof ArtIdRoute
   '/artist/$handle': typeof ArtistHandleRoute
@@ -74,9 +74,9 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/signin': typeof SigninRoute
   '/for-artists': typeof ForArtistsRoute
   '/for-customers': typeof ForCustomersRoute
+  '/signin': typeof SigninRoute
   '/signup': typeof SignupRoute
   '/art/$id': typeof ArtIdRoute
   '/artist/$handle': typeof ArtistHandleRoute
@@ -85,27 +85,27 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/signin'
     | '/for-artists'
     | '/for-customers'
+    | '/signin'
     | '/signup'
     | '/art/$id'
     | '/artist/$handle'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/signin'
     | '/for-artists'
     | '/for-customers'
+    | '/signin'
     | '/signup'
     | '/art/$id'
     | '/artist/$handle'
   id:
     | '__root__'
     | '/'
-    | '/signin'
     | '/for-artists'
     | '/for-customers'
+    | '/signin'
     | '/signup'
     | '/art/$id'
     | '/artist/$handle'
@@ -113,9 +113,9 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  SigninRoute: typeof SigninRoute
   ForArtistsRoute: typeof ForArtistsRoute
   ForCustomersRoute: typeof ForCustomersRoute
+  SigninRoute: typeof SigninRoute
   SignupRoute: typeof SignupRoute
   ArtIdRoute: typeof ArtIdRoute
   ArtistHandleRoute: typeof ArtistHandleRoute
@@ -123,18 +123,18 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/signin': {
-      id: '/signin'
-      path: '/signin'
-      fullPath: '/signin'
-      preLoaderRoute: typeof SigninRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/signup': {
       id: '/signup'
       path: '/signup'
       fullPath: '/signup'
       preLoaderRoute: typeof SignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/signin': {
+      id: '/signin'
+      path: '/signin'
+      fullPath: '/signin'
+      preLoaderRoute: typeof SigninRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/for-customers': {
@@ -177,9 +177,9 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  SigninRoute: SigninRoute,
   ForArtistsRoute: ForArtistsRoute,
   ForCustomersRoute: ForCustomersRoute,
+  SigninRoute: SigninRoute,
   SignupRoute: SignupRoute,
   ArtIdRoute: ArtIdRoute,
   ArtistHandleRoute: ArtistHandleRoute,

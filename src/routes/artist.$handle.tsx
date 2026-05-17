@@ -1,6 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
-import { ArrowLeft, MapPin, Check, Plus, Palette } from "lucide-react";
+import { ArrowLeft, MapPin, Check, Plus, Palette, Info } from "lucide-react";
 import { getArtist, getArtistArtworks, artGradient, ARTISTS, type Artist, type Artwork } from "@/lib/mock-data";
 
 export const Route = createFileRoute("/artist/$handle")({
@@ -115,6 +115,11 @@ function ArtistProfile() {
         </div>
 
         <p className="mt-8 max-w-2xl text-lg text-muted-foreground">{artist.bio}</p>
+
+        <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-2 text-xs font-semibold text-muted-foreground">
+          <Info className="h-3.5 w-3.5 text-primary" />
+          Palette takes a 15% fee on each sale. The artist keeps 85%.
+        </div>
       </section>
 
       {/* Portfolio grid */}
