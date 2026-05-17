@@ -1,9 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowLeft, Palette, Search as SearchIcon } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ARTISTS, ARTWORKS, artGradient } from "@/lib/mock-data";
 
 export const Route = createFileRoute("/search")({
+  validateSearch: (s: Record<string, unknown>) => ({ q: typeof s.q === "string" ? s.q : "" }),
   head: () => ({
     meta: [
       { title: "Search art — Palette" },
@@ -14,7 +15,12 @@ export const Route = createFileRoute("/search")({
 });
 
 function SearchPage() {
-  const [q, setQ] = useState("");
+  const { q: initialQ } = Route.useSearch();
+  const [q, setQ] = useState(initialQ);
+
+  useEffect(() => {
+    setQ(initialQ);
+  }, [initialQ]);
 
   const results = useMemo(() => {
     const needle = q.trim().toLowerCase();
