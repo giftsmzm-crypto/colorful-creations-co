@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SignupRouteImport } from './routes/signup'
+import { Route as ForArtistsRouteImport } from './routes/for-artists'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ArtistHandleRouteImport } from './routes/artist.$handle'
 import { Route as ArtIdRouteImport } from './routes/art.$id'
@@ -17,6 +18,11 @@ import { Route as ArtIdRouteImport } from './routes/art.$id'
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
   path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForArtistsRoute = ForArtistsRouteImport.update({
+  id: '/for-artists',
+  path: '/for-artists',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -37,12 +43,14 @@ const ArtIdRoute = ArtIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/for-artists': typeof ForArtistsRoute
   '/signup': typeof SignupRoute
   '/art/$id': typeof ArtIdRoute
   '/artist/$handle': typeof ArtistHandleRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/for-artists': typeof ForArtistsRoute
   '/signup': typeof SignupRoute
   '/art/$id': typeof ArtIdRoute
   '/artist/$handle': typeof ArtistHandleRoute
@@ -50,20 +58,28 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/for-artists': typeof ForArtistsRoute
   '/signup': typeof SignupRoute
   '/art/$id': typeof ArtIdRoute
   '/artist/$handle': typeof ArtistHandleRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/signup' | '/art/$id' | '/artist/$handle'
+  fullPaths: '/' | '/for-artists' | '/signup' | '/art/$id' | '/artist/$handle'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/signup' | '/art/$id' | '/artist/$handle'
-  id: '__root__' | '/' | '/signup' | '/art/$id' | '/artist/$handle'
+  to: '/' | '/for-artists' | '/signup' | '/art/$id' | '/artist/$handle'
+  id:
+    | '__root__'
+    | '/'
+    | '/for-artists'
+    | '/signup'
+    | '/art/$id'
+    | '/artist/$handle'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ForArtistsRoute: typeof ForArtistsRoute
   SignupRoute: typeof SignupRoute
   ArtIdRoute: typeof ArtIdRoute
   ArtistHandleRoute: typeof ArtistHandleRoute
@@ -76,6 +92,13 @@ declare module '@tanstack/react-router' {
       path: '/signup'
       fullPath: '/signup'
       preLoaderRoute: typeof SignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/for-artists': {
+      id: '/for-artists'
+      path: '/for-artists'
+      fullPath: '/for-artists'
+      preLoaderRoute: typeof ForArtistsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -104,6 +127,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ForArtistsRoute: ForArtistsRoute,
   SignupRoute: SignupRoute,
   ArtIdRoute: ArtIdRoute,
   ArtistHandleRoute: ArtistHandleRoute,
@@ -111,3 +135,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
