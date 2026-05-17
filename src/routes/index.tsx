@@ -1,6 +1,6 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowUpRight, Sparkles, Upload, Palette, Wallet, Globe, Star, ImageOff } from "lucide-react";
-import type { FormEvent } from "react";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { ArrowUpRight, Sparkles, Upload, Palette, Wallet, Globe, Star, ImageOff, Search } from "lucide-react";
+import { useState, type FormEvent } from "react";
 import { ARTISTS, ARTWORKS, artGradient } from "@/lib/mock-data";
 
 export const Route = createFileRoute("/")({
@@ -23,6 +23,14 @@ function Home() {
 }
 
 function Nav() {
+  const navigate = useNavigate();
+  const [q, setQ] = useState("");
+
+  function onSearch(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    navigate({ to: "/search", search: q.trim() ? { q: q.trim() } : undefined });
+  }
+
   return (
     <header className="relative z-30 mx-auto flex max-w-7xl items-center justify-between px-6 py-6">
       <Link to="/" className="flex items-center gap-2">
@@ -31,6 +39,18 @@ function Nav() {
         </span>
         <span className="font-display text-xl font-extrabold tracking-tight">Palette</span>
       </Link>
+      <form
+        onSubmit={onSearch}
+        className="mx-6 hidden flex-1 max-w-md items-center gap-2 rounded-full border border-border bg-card px-4 py-2 shadow-sm md:flex"
+      >
+        <Search className="h-4 w-4 text-muted-foreground" />
+        <input
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+          placeholder="Search art, artists, categories…"
+          className="w-full bg-transparent text-sm focus:outline-none"
+        />
+      </form>
       <nav className="hidden gap-8 text-sm font-medium md:flex">
         <Link to="/for-artists" className="hover:text-primary">For artists</Link>
         <Link to="/for-customers" className="hover:text-primary">For customers</Link>
