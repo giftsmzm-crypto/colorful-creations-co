@@ -70,14 +70,17 @@ function Nav() {
           <DropdownMenuContent align="end" className="w-52">
             <DropdownMenuLabel>Browse by category</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => navigate({ to: "/search", search: { q: "art and animation" } })}>
-              Art &amp; animation
+            <DropdownMenuItem onClick={() => navigate({ to: "/search", search: { q: "Illustration" } })}>
+              Illustration
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => navigate({ to: "/search", search: { q: "digital art" } })}>
-              Digital art
+            <DropdownMenuItem onClick={() => navigate({ to: "/search", search: { q: "Photography" } })}>
+              Photography
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => navigate({ to: "/search", search: { q: "traditional art" } })}>
-              Traditional art
+            <DropdownMenuItem onClick={() => navigate({ to: "/search", search: { q: "Mixed media" } })}>
+              Mixed media
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => navigate({ to: "/search", search: { q: "Posters" } })}>
+              Posters
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
