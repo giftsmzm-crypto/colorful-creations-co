@@ -60,8 +60,12 @@ function SignUp() {
 
       event.currentTarget.reset();
       setStatusMessage("Account created. Check your email to confirm your signup.");
-    } catch {
-      setErrorMessage("Something went wrong while creating your account. Please try again.");
+    } catch (error) {
+      setErrorMessage(
+        error instanceof Error
+          ? error.message
+          : "Something went wrong while creating your account. Please try again.",
+      );
     } finally {
       setIsSubmitting(false);
     }
