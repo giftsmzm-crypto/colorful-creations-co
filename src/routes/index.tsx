@@ -41,13 +41,13 @@ function Nav() {
       </Link>
       <form
         onSubmit={onSearch}
-        className="mx-6 hidden flex-1 max-w-md items-center gap-2 rounded-full border border-border bg-card px-4 py-2 shadow-sm md:flex"
+        className="mx-3 flex flex-1 max-w-md items-center gap-2 rounded-full border border-border bg-card px-3 py-2 shadow-sm sm:mx-6 sm:px-4"
       >
-        <Search className="h-4 w-4 text-muted-foreground" />
+        <Search className="h-4 w-4 shrink-0 text-muted-foreground" />
         <input
           value={q}
           onChange={(e) => setQ(e.target.value)}
-          placeholder="Search art, artists, categories…"
+          placeholder="Search art, artists…"
           className="w-full bg-transparent text-sm focus:outline-none"
         />
       </form>
@@ -57,13 +57,7 @@ function Nav() {
         <a href="#pricing" className="hover:text-primary">Pricing</a>
       </nav>
       <div className="flex items-center gap-3">
-        <Link to="/signin" className="hidden text-sm font-medium hover:text-primary md:inline">Sign in</Link>
-        <Link
-          to="/signup"
-          className="inline-flex items-center gap-1.5 rounded-full bg-foreground px-4 py-2 text-sm font-semibold text-background transition hover:opacity-90"
-        >
-          Start selling <ArrowUpRight className="h-4 w-4" />
-        </Link>
+        <Link to="/signin" className="text-sm font-medium hover:text-primary">Sign in</Link>
       </div>
     </header>
   );
