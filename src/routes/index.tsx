@@ -32,8 +32,8 @@ function Nav() {
         <span className="font-display text-xl font-extrabold tracking-tight">Palette</span>
       </Link>
       <nav className="hidden gap-8 text-sm font-medium md:flex">
-        <a href="#how" className="hover:text-primary">How it works</a>
-        <a href="#showcase" className="hover:text-primary">Showcase</a>
+        <Link to="/for-artists" className="hover:text-primary">For artists</Link>
+        <Link to="/for-customers" className="hover:text-primary">For customers</Link>
         <a href="#pricing" className="hover:text-primary">Pricing</a>
       </nav>
       <div className="flex items-center gap-3">
@@ -65,28 +65,26 @@ function Hero() {
             <Sparkles className="h-3.5 w-3.5 text-primary" /> New • Open for artists worldwide
           </span>
           <h1 className="mt-6 text-5xl font-extrabold leading-[1.02] md:text-7xl">
-            A loud, <span className="text-gradient-sunset">colorful</span> home for your art.
+            A <span className="text-gradient-sunset">colorful</span> place to sell your art.
           </h1>
           <p className="mt-6 max-w-xl text-lg text-muted-foreground md:text-xl">
-            Upload prints, originals or downloads. We host the gallery, run the checkout, and keep
-            things simple — you keep the spotlight.
+            Upload your art, set a price, and start selling. We handle the rest.
           </p>
           <div className="mt-9 flex flex-wrap items-center gap-4">
             <Link
               to="/signup"
               className="inline-flex items-center gap-2 rounded-full bg-gradient-sunset px-6 py-3.5 text-base font-semibold text-primary-foreground shadow-xl shadow-primary/30 transition hover:scale-[1.02]"
             >
-              <Upload className="h-4 w-4" /> Upload your first piece
+              <Upload className="h-4 w-4" /> Upload your art
             </Link>
             <a href="#showcase" className="inline-flex items-center gap-1 text-base font-semibold underline decoration-2 underline-offset-4 hover:text-primary">
-              See the gallery →
+              See the art →
             </a>
           </div>
-          <dl className="mt-12 grid max-w-md grid-cols-3 gap-6 text-sm">
+          <dl className="mt-12 grid max-w-md grid-cols-2 gap-6 text-sm">
             {[
-              ["12%", "flat fee"],
+              ["15%", "our fee"],
               ["48h", "payouts"],
-              ["120+", "countries"],
             ].map(([n, l]) => (
               <div key={l}>
                 <dt className="font-display text-3xl font-extrabold text-gradient-sunset">{n}</dt>
@@ -157,15 +155,15 @@ function Marquee() {
 
 function HowItWorks() {
   const steps = [
-    { icon: Upload, t: "Upload your art", d: "Drag in JPGs, PNGs or PDFs. Add a price, story, and edition size." },
-    { icon: Globe, t: "Reach collectors", d: "Your work appears in a curated, colorful gallery seen worldwide." },
-    { icon: Wallet, t: "Get paid fast", d: "We handle checkout and shipping labels. Payouts hit in 48 hours." },
+    { icon: Upload, t: "Upload your art", d: "Add a photo, a title, and a price. That's it." },
+    { icon: Globe, t: "Reach buyers", d: "Your art shows up in our gallery for people to discover." },
+    { icon: Wallet, t: "Get paid", d: "When your art sells, money lands in your account in 48 hours." },
   ];
   return (
     <section id="how" className="mx-auto max-w-7xl px-6 py-28">
       <div className="max-w-2xl">
         <p className="text-sm font-bold uppercase tracking-widest text-primary">How it works</p>
-        <h2 className="mt-3 text-4xl font-extrabold md:text-6xl">Three steps. Zero gallery politics.</h2>
+        <h2 className="mt-3 text-4xl font-extrabold md:text-6xl">Three simple steps.</h2>
       </div>
       <div className="mt-14 grid gap-6 md:grid-cols-3">
         {steps.map(({ icon: Icon, t, d }, i) => (
@@ -195,11 +193,11 @@ function Showcase() {
           <div className="max-w-xl">
             <p className="text-sm font-bold uppercase tracking-widest text-gradient-sunset">Featured artists</p>
             <h2 className="mt-3 text-4xl font-extrabold md:text-6xl">
-              Bold work from people <span className="text-gradient-sunset">making things</span> right now.
+              Real art from <span className="text-gradient-sunset">real artists</span>.
             </h2>
           </div>
           <Link to="/signup" className="inline-flex items-center gap-1 text-sm font-semibold underline decoration-2 underline-offset-4">
-            Become a featured artist →
+            Become an artist →
           </Link>
         </div>
 
@@ -241,14 +239,14 @@ function Pricing() {
         <div>
           <p className="text-sm font-bold uppercase tracking-widest text-primary">Simple pricing</p>
           <h2 className="mt-3 text-4xl font-extrabold md:text-6xl">
-            One flat fee. <span className="text-gradient-sunset">No surprises.</span>
+            One fee. <span className="text-gradient-sunset">No surprises.</span>
           </h2>
           <p className="mt-6 max-w-md text-lg text-muted-foreground">
-            We take a flat <span className="font-bold text-foreground">12%</span> when your art sells.
-            That's it. No listing fees, no monthly bill, no hidden cuts.
+            We take <span className="font-bold text-foreground">15%</span> when your art sells.
+            That's it. No upload fees. No monthly bill.
           </p>
           <ul className="mt-8 space-y-3 text-base">
-            {["Unlimited uploads", "Built-in checkout & shipping labels", "Global tax handled for you", "Cancel any time, keep your fans"].map((f) => (
+            {["Upload as much as you want", "We handle checkout", "We handle taxes", "Leave any time"].map((f) => (
               <li key={f} className="flex items-center gap-3">
                 <span className="h-2.5 w-2.5 rounded-full bg-gradient-sunset" />
                 {f}
@@ -261,17 +259,17 @@ function Pricing() {
           <div className="rounded-[1.85rem] bg-card p-10">
             <p className="text-sm font-bold uppercase tracking-widest text-muted-foreground">Artist plan</p>
             <div className="mt-4 flex items-end gap-2">
-              <span className="font-display text-7xl font-extrabold text-gradient-sunset">12%</span>
+              <span className="font-display text-7xl font-extrabold text-gradient-sunset">15%</span>
               <span className="pb-3 text-muted-foreground">per sale</span>
             </div>
-            <p className="mt-3 text-muted-foreground">Free to join. Only pay when you make money.</p>
+            <p className="mt-3 text-muted-foreground">Free to join. Only pay when you sell.</p>
             <Link
               to="/signup"
               className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-foreground px-6 py-4 text-base font-semibold text-background transition hover:opacity-90"
             >
-              Create my shop <ArrowUpRight className="h-4 w-4" />
+              Start selling <ArrowUpRight className="h-4 w-4" />
             </Link>
-            <p className="mt-4 text-center text-xs text-muted-foreground">No card required to start.</p>
+            <p className="mt-4 text-center text-xs text-muted-foreground">No credit card needed.</p>
           </div>
         </div>
       </div>
@@ -295,10 +293,10 @@ function CTA() {
         <div aria-hidden className="absolute -bottom-24 -left-10 h-72 w-72 rounded-full bg-violet/40 blur-3xl" />
         <div className="relative max-w-2xl">
           <h2 className="text-4xl font-extrabold leading-tight md:text-6xl">
-            Your next collector is scrolling right now.
+            Your next buyer is here.
           </h2>
           <p className="mt-5 text-lg text-primary-foreground/90 md:text-xl">
-            Set up your artist shop in under five minutes. Bring the art — we'll bring the buyers.
+            Set up your shop in five minutes. We'll bring the buyers.
           </p>
           <form
             onSubmit={handleWaitlistSubmit}
