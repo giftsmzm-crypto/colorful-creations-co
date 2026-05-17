@@ -37,7 +37,7 @@ function Nav() {
         <a href="#pricing" className="hover:text-primary">Pricing</a>
       </nav>
       <div className="flex items-center gap-3">
-        <Link to="/signup" className="hidden text-sm font-medium hover:text-primary md:inline">Sign up</Link>
+        <Link to="/signin" className="hidden text-sm font-medium hover:text-primary md:inline">Sign in</Link>
         <Link
           to="/signup"
           className="inline-flex items-center gap-1.5 rounded-full bg-foreground px-4 py-2 text-sm font-semibold text-background transition hover:opacity-90"
