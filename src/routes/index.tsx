@@ -1,8 +1,16 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { ArrowUpRight, Sparkles, Upload, Palette, Wallet, Globe, Star, ImageOff, Search } from "lucide-react";
+import { ArrowUpRight, Sparkles, Upload, Palette, Wallet, Globe, Star, ImageOff, Search, MoreVertical } from "lucide-react";
 import { useState, type FormEvent } from "react";
 import { ARTISTS, ARTWORKS, artGradient } from "@/lib/mock-data";
 import { SettingsMenu } from "@/components/SettingsMenu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export const Route = createFileRoute("/")({
   component: Home,
@@ -51,6 +59,28 @@ function Nav() {
           placeholder="Search art, artists…"
           className="w-full bg-transparent text-sm focus:outline-none"
         />
+        <DropdownMenu>
+          <DropdownMenuTrigger
+            type="button"
+            aria-label="Browse categories"
+            className="grid h-7 w-7 shrink-0 place-items-center rounded-full text-muted-foreground transition hover:bg-accent hover:text-foreground"
+          >
+            <MoreVertical className="h-4 w-4" />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-52">
+            <DropdownMenuLabel>Browse by category</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem onClick={() => navigate({ to: "/search", search: { q: "art and animation" } })}>
+              Art &amp; animation
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => navigate({ to: "/search", search: { q: "digital art" } })}>
+              Digital art
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => navigate({ to: "/search", search: { q: "traditional art" } })}>
+              Traditional art
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </form>
       <nav className="hidden gap-8 text-sm font-medium md:flex">
         <Link to="/for-artists" className="hover:text-primary">For artists</Link>
