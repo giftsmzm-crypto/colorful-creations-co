@@ -117,6 +117,9 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <div className="w-full bg-foreground py-1.5 text-center text-[11px] font-semibold uppercase tracking-widest text-background">
+        This is a demo
+      </div>
       <Outlet />
     </QueryClientProvider>
   );
