@@ -41,6 +41,38 @@ export const Route = createFileRoute("/art/$id")({
 function ArtworkDetail() {
   const { art, artist, related } = Route.useLoaderData();
   const [liked, setLiked] = useState(false);
+  const [checkoutMessage, setCheckoutMessage] = useState("");
+  const [shareMessage, setShareMessage] = useState("");
+
+  function handleBuyNow() {
+    setShareMessage("");
+    setCheckoutMessage(
+      "Checkout is not live yet, but your interest has been saved. Contact the artist to complete this purchase.",
+    );
+  }
+
+  async function handleShare() {
+    setCheckoutMessage("");
+    const shareUrl = window.location.href;
+    const shareTitle = `${art.title} by ${artist.name} on Palette`;
+
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          title: shareTitle,
+          text: `Check out ${art.title} by ${artist.name}.`,
+          url: shareUrl,
+        });
+        setShareMessage("Share sheet opened.");
+        return;
+      }
+
+      await navigator.clipboard.writeText(shareUrl);
+      setShareMessage("Artwork link copied.");
+    } catch {
+      setShareMessage("Share cancelled.");
+    }
+  }
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -98,7 +130,10 @@ function ArtworkDetail() {
                 <span className="font-display text-5xl font-extrabold text-gradient-sunset">${art.price}</span>
                 <span className="text-xs text-muted-foreground">incl. 12% platform fee</span>
               </div>
-              <button className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-foreground px-6 py-4 text-base font-semibold text-background transition hover:opacity-90">
+              <button
+                onClick={handleBuyNow}
+                className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-foreground px-6 py-4 text-base font-semibold text-background transition hover:opacity-90"
+              >
                 <ShoppingBag className="h-4 w-4" /> Buy now
               </button>
               <div className="mt-3 grid grid-cols-2 gap-3">
@@ -109,10 +144,23 @@ function ArtworkDetail() {
                   <Heart className={"h-4 w-4 " + (liked ? "fill-current text-primary" : "")} />
                   {liked ? "Liked" : "Like"}
                 </button>
-                <button className="inline-flex items-center justify-center gap-1.5 rounded-2xl border border-border bg-background px-4 py-3 text-sm font-semibold hover:border-primary">
+                <button
+                  onClick={handleShare}
+                  className="inline-flex items-center justify-center gap-1.5 rounded-2xl border border-border bg-background px-4 py-3 text-sm font-semibold hover:border-primary"
+                >
                   <Share2 className="h-4 w-4" /> Share
                 </button>
               </div>
+              {checkoutMessage ? (
+                <p className="mt-4 rounded-2xl border border-primary/20 bg-primary/10 px-4 py-3 text-sm font-medium text-foreground">
+                  {checkoutMessage}
+                </p>
+              ) : null}
+              {shareMessage ? (
+                <p className="mt-4 rounded-2xl border border-border bg-background px-4 py-3 text-sm font-medium text-muted-foreground">
+                  {shareMessage}
+                </p>
+              ) : null}
             </div>
           </div>
 

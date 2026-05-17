@@ -29,8 +29,8 @@ export const ARTISTS: Artist[] = [
     location: "Lisbon, PT",
     followers: 12480,
     links: [
-      { label: "Instagram", href: "#" },
-      { label: "Website", href: "#" },
+      { label: "Instagram", href: "https://www.instagram.com/" },
+      { label: "Website", href: "https://example.com/mira-kovac" },
     ],
   },
   {
@@ -41,7 +41,7 @@ export const ARTISTS: Artist[] = [
     bio: "Neon-drenched film photography from late-night coastal cities.",
     location: "Los Angeles, US",
     followers: 8210,
-    links: [{ label: "Instagram", href: "#" }],
+    links: [{ label: "Instagram", href: "https://www.instagram.com/" }],
   },
   {
     handle: "ines",
@@ -51,7 +51,7 @@ export const ARTISTS: Artist[] = [
     bio: "Bloom series and other soft rebellions in paint, paper, and thread.",
     location: "Porto, PT",
     followers: 5340,
-    links: [{ label: "Website", href: "#" }],
+    links: [{ label: "Website", href: "https://example.com/ines-duarte" }],
   },
   {
     handle: "kai",
@@ -61,7 +61,7 @@ export const ARTISTS: Artist[] = [
     bio: "Screen-printed posters with a love of warm grit and tall type.",
     location: "Stockholm, SE",
     followers: 3120,
-    links: [{ label: "Shop", href: "#" }],
+    links: [{ label: "Shop", href: "https://example.com/kai-lindqvist" }],
   },
 ];
 

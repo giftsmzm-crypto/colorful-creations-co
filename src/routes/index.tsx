@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowUpRight, Sparkles, Upload, Palette, Wallet, Globe, Star } from "lucide-react";
+import type { FormEvent } from "react";
 import { ARTISTS, ARTWORKS, artGradient } from "@/lib/mock-data";
 
 export const Route = createFileRoute("/")({
@@ -279,6 +280,14 @@ function Pricing() {
 }
 
 function CTA() {
+  function handleWaitlistSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const email = String(formData.get("email") ?? "").trim();
+    const query = email ? `?email=${encodeURIComponent(email)}` : "";
+    window.location.href = `/signup${query}`;
+  }
+
   return (
     <section id="cta" className="mx-auto max-w-7xl px-6 pb-28">
       <div className="relative overflow-hidden rounded-[2.5rem] bg-gradient-sunset p-10 text-primary-foreground md:p-20">
@@ -292,10 +301,11 @@ function CTA() {
             Set up your artist shop in under five minutes. Bring the art — we'll bring the buyers.
           </p>
           <form
-            onSubmit={(e) => e.preventDefault()}
+            onSubmit={handleWaitlistSubmit}
             className="mt-9 flex flex-col gap-3 sm:flex-row"
           >
             <input
+              name="email"
               type="email"
               required
               placeholder="you@studio.com"
@@ -326,9 +336,9 @@ function Footer() {
           <span>© {new Date().getFullYear()}</span>
         </div>
         <div className="flex gap-6">
-          <a href="#" className="hover:text-foreground">Twitter</a>
-          <a href="#" className="hover:text-foreground">Instagram</a>
-          <a href="#" className="hover:text-foreground">Contact</a>
+          <a href="https://twitter.com/" target="_blank" rel="noreferrer" className="hover:text-foreground">Twitter</a>
+          <a href="https://www.instagram.com/" target="_blank" rel="noreferrer" className="hover:text-foreground">Instagram</a>
+          <a href="mailto:hello@palette.example" className="hover:text-foreground">Contact</a>
         </div>
       </div>
     </footer>
