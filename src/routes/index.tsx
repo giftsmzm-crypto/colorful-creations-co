@@ -57,7 +57,9 @@ function Nav() {
         <a href="#pricing" className="hover:text-primary">Pricing</a>
       </nav>
       <div className="flex items-center gap-3">
-        <Link to="/signin" className="text-sm font-medium hover:text-primary">Sign in</Link>
+        <span className="font-display text-lg font-extrabold italic tracking-tight text-gradient-sunset sm:text-xl">
+          Welcome
+        </span>
       </div>
     </header>
   );
