@@ -53,6 +53,12 @@ function ForArtists() {
           >
             Start selling <ArrowUpRight className="h-4 w-4" />
           </Link>
+          <Link
+            to="/my-creations"
+            className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-6 py-3.5 text-base font-semibold text-foreground transition hover:bg-accent"
+          >
+            See my creations
+          </Link>
           <Link to="/for-customers" className="inline-flex items-center gap-1 text-base font-semibold underline decoration-2 underline-offset-4 hover:text-primary">
             Looking to buy art? →
           </Link>

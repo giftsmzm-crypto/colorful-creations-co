@@ -9,14 +9,22 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TopTrendingRouteImport } from './routes/top-trending'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as SigninRouteImport } from './routes/signin'
+import { Route as SearchRouteImport } from './routes/search'
+import { Route as MyCreationsRouteImport } from './routes/my-creations'
 import { Route as ForCustomersRouteImport } from './routes/for-customers'
 import { Route as ForArtistsRouteImport } from './routes/for-artists'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ArtistHandleRouteImport } from './routes/artist.$handle'
 import { Route as ArtIdRouteImport } from './routes/art.$id'
 
+const TopTrendingRoute = TopTrendingRouteImport.update({
+  id: '/top-trending',
+  path: '/top-trending',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
   path: '/signup',
@@ -25,6 +33,16 @@ const SignupRoute = SignupRouteImport.update({
 const SigninRoute = SigninRouteImport.update({
   id: '/signin',
   path: '/signin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SearchRoute = SearchRouteImport.update({
+  id: '/search',
+  path: '/search',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MyCreationsRoute = MyCreationsRouteImport.update({
+  id: '/my-creations',
+  path: '/my-creations',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ForCustomersRoute = ForCustomersRouteImport.update({
@@ -57,8 +75,11 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/for-artists': typeof ForArtistsRoute
   '/for-customers': typeof ForCustomersRoute
+  '/my-creations': typeof MyCreationsRoute
+  '/search': typeof SearchRoute
   '/signin': typeof SigninRoute
   '/signup': typeof SignupRoute
+  '/top-trending': typeof TopTrendingRoute
   '/art/$id': typeof ArtIdRoute
   '/artist/$handle': typeof ArtistHandleRoute
 }
@@ -66,8 +87,11 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/for-artists': typeof ForArtistsRoute
   '/for-customers': typeof ForCustomersRoute
+  '/my-creations': typeof MyCreationsRoute
+  '/search': typeof SearchRoute
   '/signin': typeof SigninRoute
   '/signup': typeof SignupRoute
+  '/top-trending': typeof TopTrendingRoute
   '/art/$id': typeof ArtIdRoute
   '/artist/$handle': typeof ArtistHandleRoute
 }
@@ -76,8 +100,11 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/for-artists': typeof ForArtistsRoute
   '/for-customers': typeof ForCustomersRoute
+  '/my-creations': typeof MyCreationsRoute
+  '/search': typeof SearchRoute
   '/signin': typeof SigninRoute
   '/signup': typeof SignupRoute
+  '/top-trending': typeof TopTrendingRoute
   '/art/$id': typeof ArtIdRoute
   '/artist/$handle': typeof ArtistHandleRoute
 }
@@ -87,8 +114,11 @@ export interface FileRouteTypes {
     | '/'
     | '/for-artists'
     | '/for-customers'
+    | '/my-creations'
+    | '/search'
     | '/signin'
     | '/signup'
+    | '/top-trending'
     | '/art/$id'
     | '/artist/$handle'
   fileRoutesByTo: FileRoutesByTo
@@ -96,8 +126,11 @@ export interface FileRouteTypes {
     | '/'
     | '/for-artists'
     | '/for-customers'
+    | '/my-creations'
+    | '/search'
     | '/signin'
     | '/signup'
+    | '/top-trending'
     | '/art/$id'
     | '/artist/$handle'
   id:
@@ -105,8 +138,11 @@ export interface FileRouteTypes {
     | '/'
     | '/for-artists'
     | '/for-customers'
+    | '/my-creations'
+    | '/search'
     | '/signin'
     | '/signup'
+    | '/top-trending'
     | '/art/$id'
     | '/artist/$handle'
   fileRoutesById: FileRoutesById
@@ -115,14 +151,24 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ForArtistsRoute: typeof ForArtistsRoute
   ForCustomersRoute: typeof ForCustomersRoute
+  MyCreationsRoute: typeof MyCreationsRoute
+  SearchRoute: typeof SearchRoute
   SigninRoute: typeof SigninRoute
   SignupRoute: typeof SignupRoute
+  TopTrendingRoute: typeof TopTrendingRoute
   ArtIdRoute: typeof ArtIdRoute
   ArtistHandleRoute: typeof ArtistHandleRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/top-trending': {
+      id: '/top-trending'
+      path: '/top-trending'
+      fullPath: '/top-trending'
+      preLoaderRoute: typeof TopTrendingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/signup': {
       id: '/signup'
       path: '/signup'
@@ -135,6 +181,20 @@ declare module '@tanstack/react-router' {
       path: '/signin'
       fullPath: '/signin'
       preLoaderRoute: typeof SigninRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/search': {
+      id: '/search'
+      path: '/search'
+      fullPath: '/search'
+      preLoaderRoute: typeof SearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/my-creations': {
+      id: '/my-creations'
+      path: '/my-creations'
+      fullPath: '/my-creations'
+      preLoaderRoute: typeof MyCreationsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/for-customers': {
@@ -179,8 +239,11 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ForArtistsRoute: ForArtistsRoute,
   ForCustomersRoute: ForCustomersRoute,
+  MyCreationsRoute: MyCreationsRoute,
+  SearchRoute: SearchRoute,
   SigninRoute: SigninRoute,
   SignupRoute: SignupRoute,
+  TopTrendingRoute: TopTrendingRoute,
   ArtIdRoute: ArtIdRoute,
   ArtistHandleRoute: ArtistHandleRoute,
 }

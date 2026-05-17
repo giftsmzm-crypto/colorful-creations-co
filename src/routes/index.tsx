@@ -72,16 +72,13 @@ function Hero() {
           </p>
           <div className="mt-9 flex flex-wrap items-center gap-4">
             <Link
-              to="/signup"
+              to="/for-artists"
               className="inline-flex items-center gap-2 rounded-full bg-gradient-sunset px-6 py-3.5 text-base font-semibold text-primary-foreground shadow-xl shadow-primary/30 transition hover:scale-[1.02]"
             >
-              <Upload className="h-4 w-4" /> Upload your art
+              Start selling <ArrowUpRight className="h-4 w-4" />
             </Link>
-            <a href="#showcase" className="inline-flex items-center gap-1 text-base font-semibold underline decoration-2 underline-offset-4 hover:text-primary">
-              See the art →
-            </a>
           </div>
-          <dl className="mt-12 grid max-w-md grid-cols-2 gap-6 text-sm">
+          <dl className="mt-12 flex max-w-md gap-8 text-sm">
             {[
               ["15%", "our fee"],
               ["48h", "payouts"],
