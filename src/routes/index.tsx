@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowUpRight, Sparkles, Upload, Palette, Wallet, Globe, Star } from "lucide-react";
+import { ArrowUpRight, Sparkles, Upload, Palette, Wallet, Globe, Star, ImageOff } from "lucide-react";
 import type { FormEvent } from "react";
 import { ARTISTS, ARTWORKS, artGradient } from "@/lib/mock-data";
 
@@ -92,45 +92,51 @@ function Hero() {
         </div>
 
         <div className="md:col-span-5">
-          <HeroCollage />
+          <MostPopular />
         </div>
       </div>
     </section>
   );
 }
 
-function HeroCollage() {
-  const layout = [
-    { id: "citrus-daydream", rot: "-rotate-3", h: "h-64" },
-    { id: "neon-pacific", rot: "rotate-2 -mt-6", h: "h-52" },
-    { id: "bloom-04", rot: "rotate-1 -mt-10", h: "h-72" },
-    { id: "soft-rebellion", rot: "-rotate-2 -mt-4", h: "h-56" },
-  ];
+function MostPopular() {
+  // No artist uploads yet — every day we'll feature the best new piece here.
+  const uploads: { id: string; title: string; color: string; artistHandle: string }[] = [];
+
   return (
-    <div className="relative grid grid-cols-2 gap-5">
-      {layout.map((l) => {
-        const art = ARTWORKS.find((a) => a.id === l.id)!;
-        const artist = ARTISTS.find((a) => a.handle === art.artistHandle)!;
-        return (
-          <Link
-            key={l.id}
-            to="/art/$id"
-            params={{ id: art.id }}
-            className={`group relative ${l.rot} overflow-hidden rounded-3xl border border-border bg-card shadow-2xl shadow-foreground/10 transition hover:rotate-0`}
-          >
-            <div className={`${l.h} w-full`} style={{ background: artGradient(art.color) }} />
-            <div className="flex items-center justify-between gap-2 px-4 py-3">
-              <div>
-                <p className="font-display text-sm font-bold">{art.title}</p>
-                <p className="text-xs text-muted-foreground">by {artist.name.split(" ")[0]}</p>
-              </div>
-              <span className="rounded-full bg-foreground px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-background">
-                For sale
-              </span>
-            </div>
-          </Link>
-        );
-      })}
+    <div>
+      <p className="text-sm font-bold uppercase tracking-widest text-primary">Most popular</p>
+      <p className="mt-1 text-xs text-muted-foreground">A fresh pick from artist uploads, every day.</p>
+
+      {uploads.length === 0 ? (
+        <div className="mt-4 flex flex-col items-center justify-center rounded-3xl border border-dashed border-border bg-card p-10 text-center">
+          <ImageOff className="h-10 w-10 text-muted-foreground" />
+          <p className="mt-4 font-display text-lg font-extrabold">No art uploaded yet</p>
+          <p className="mt-1 max-w-xs text-sm text-muted-foreground">
+            As soon as artists start uploading, we'll feature the best ones here.
+          </p>
+        </div>
+      ) : (
+        <div className="mt-4 grid grid-cols-2 gap-5">
+          {uploads.slice(0, 4).map((art) => {
+            const artist = ARTISTS.find((a) => a.handle === art.artistHandle);
+            return (
+              <Link
+                key={art.id}
+                to="/art/$id"
+                params={{ id: art.id }}
+                className="group relative overflow-hidden rounded-3xl border border-border bg-card shadow-2xl shadow-foreground/10 transition hover:-translate-y-1"
+              >
+                <div className="h-56 w-full" style={{ background: artGradient(art.color) }} />
+                <div className="px-4 py-3">
+                  <p className="font-display text-sm font-bold">{art.title}</p>
+                  {artist ? <p className="text-xs text-muted-foreground">by {artist.name.split(" ")[0]}</p> : null}
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }
